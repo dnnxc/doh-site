@@ -17,8 +17,17 @@ use App\Http\Controllers\SidePanelController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/test_1', function () {
-    return view('test_1');
+// Route::get('/welcome', function () {
+//     return view('welcome');
+// });
+Route::get('/bhw', function () {
+    return view('mainpages/bhw');
+});
+Route::get('/lgu', function () {
+    return view('mainpages/lgu');
+});
+Route::get('/gida', function () {
+    return view('mainpages/gida');
 });
 Route::get('/side-panel', [SidePanelController::class, 'show']);
 
