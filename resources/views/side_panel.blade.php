@@ -22,6 +22,14 @@
             <div class="flex h-[29px]"><x-ri-arrow-right-s-line class="" /></div>
         </div>
 
+        <div class="text-white flex flex-row items-center pb-8 active:bg-[#FFCF35]">
+            <a href="/lhsml" class="">
+                <div class="flex">Local Health Systems Maturity Level (LHS ML)</div>
+            </a>
+
+            <div class="flex h-[29px]"><x-ri-arrow-right-s-line class="" /></div>
+        </div>
+
         <!-- Double arrow icon positioned at the bottom right -->
         <div class="bottom-0 right-0">
             <x-radix-double-arrow-left id="closeSidePanel" class="text-white h-[30px]" />

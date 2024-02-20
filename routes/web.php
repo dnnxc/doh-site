@@ -29,6 +29,9 @@ Route::get('/lgu', function () {
 Route::get('/gida', function () {
     return view('mainpages/gida');
 });
+Route::get('/lhsml', function () {
+    return view('mainpages/lhsml');
+});
 Route::get('/side-panel', [SidePanelController::class, 'show']);
 
 
