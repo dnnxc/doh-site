@@ -30,78 +30,78 @@
                     @endforeach
                 </select>
 
-                <select id="cityDropdown"
-                    class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
-                    disabled>
-                    <option disabled selected>Please select a City</option>
-                    <option>Normal Apple</option>
-                    <option>Normal Orange</option>
-                    <option>Normal Tomato</option>
-                </select>
+                    <select id="cityDropdown"
+                        class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
+                        disabled>
+                        <option disabled selected>Please select a Province</option>
+                        <option>Normal Apple</option>
+                        <option>Normal Orange</option>
+                        <option>Normal Tomato</option>
+                    </select>
 
-                <select id="barangayDropdown"
-                    class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
-                    disabled>
-                    <option disabled selected>Please select a Baranggay</option>
-                    <option>Normal Apple</option>
-                    <option>Normal Orange</option>
-                    <option>Normal Tomato</option>
-                </select>
-            </div>
-            
-            <div class="flex flex-col gap-4">
-                <div class="card w-full h-[120px] p-4 bg-white shadow-md rounded-md flex flex-col gap-4">
-                    <div class="flex flex-row justify-between">
-                        <div class="flex flex-col text-[#252525] font-extrabold justify-center">
-                            <div class="flex text-xl tracking-wide	">Total number of</div>
-                            <div class="flex text-4xl tracking-wide	">BHW</div>
-                        </div>
-                        <div class="flex items-center justify-center text-[#252525] font-extrabold">
-                            <div class="flex text-7xl items-end">129412</div>
-                        </div>
-                    </div>
-                    <div class="flex items-end justify-end text-xs italic">
-                        * Available data as of&nbsp;<span id="yesterdayDate"></span>
-                    </div>
-                </div>
-                
-
-
-                <div class="flex w-full gap-4 h-[250px]">
-                    <div class="card w-full h-full p-4 pb-2 bg-white shadow-md rounded-md gap-2">
-                        <div class="flex flex-col h-full w-full">
-                            <div class="text-black tracking-wide flex-none font-bold">Age Group</div>
-                            <div class="flex-grow h-full flex items-end justify-end pb-2">
-                                <canvas id="ageGroupChart" class="w-full" width="400" height="100"></canvas>
-                            </div>
-                            <div class="flex-none flex items-end justify-end text-xs italic">
-                                * Available data as of&nbsp;<span id="yesterdayDate2"></span>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="card w-full h-full p-4 bg-white shadow-md rounded-md flex flex-row">
-                        <div class="flex flex-col h-full w-full">
-                            <div class="text-black tracking-wide flex-none font-bold">Sex</div>
-                            <div class="flex-grow h-full flex items-end justify-end pb-2">
-                                <canvas id="sexChart" class="w-full" width="400" height="100"></canvas>
-                            </div>
-                            <div class="flex-none flex items-end justify-end text-xs italic">
-                                * Available data as of&nbsp;<span id="yesterdayDate3"></span>
-                            </div>
-                        </div>
-                    </div>
+                    <select id="barangayDropdown"
+                        class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
+                        disabled>
+                        <option disabled selected>Please select a City</option>
+                        <option>Normal Apple</option>
+                        <option>Normal Orange</option>
+                        <option>Normal Tomato</option>
+                    </select>
                 </div>
 
-                <div class="card w-full h-[340px] p-4 bg-white shadow-md rounded-md flex flex-row gap-2">
-                    <div class="flex flex-col h-full w-full gap-3">
-                        <div class="text-black tracking-wide flex-none font-bold">Educational Attainment</div>
-                        <div class="flex-grow h-full flex items-end justify-end pb-2">
-                            <canvas id="educChart" class="w-full" width="400" height="50"></canvas>
+                <div class="flex flex-col gap-4">
+                    <div class="card w-full h-[120px] p-4 bg-white shadow-md rounded-md flex flex-col gap-4">
+                        <div class="flex flex-row justify-between">
+                            <div class="flex flex-col text-[#252525] font-extrabold justify-center">
+                                <div class="flex text-xl tracking-wide	">Total number of</div>
+                                <div class="flex text-4xl tracking-wide	">BHW</div>
+                            </div>
+                            <div class="flex items-center justify-center text-[#252525] font-extrabold">
+                                <div class="flex text-7xl items-end" style="color: #0e9cdc">10 500</div>
+                            </div>
                         </div>
-                        <div class="flex-none flex items-end justify-end text-xs italic">
-                            * Available data as of&nbsp;<span id="yesterdayDate4"></span>
+                        <div class="flex items-end justify-end text-xs italic">
+                            * Available data as of&nbsp;<span id="yesterdayDate"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="flex w-full gap-4 h-[250px]">
+                        <div class="card w-full h-full p-4 pb-2 bg-white shadow-md rounded-md gap-2">
+                            <div class="flex flex-col h-full w-full">
+                                <div class="text-black tracking-wide flex-none font-bold">Age Group</div>
+                                <div class="flex-grow h-full flex items-end justify-end pb-2">
+                                    <canvas id="ageGroupChart" class="w-full" width="400" height="100"></canvas>
+                                </div>
+                                <div class="flex-none flex items-end justify-end text-xs italic">
+                                    * Available data as of&nbsp;<span id="yesterdayDate2"></span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card w-full h-full p-4 bg-white shadow-md rounded-md flex flex-row">
+                            <div class="flex flex-col h-full w-full">
+                                <div class="text-black tracking-wide flex-none font-bold">Sex</div>
+                                <div class="flex-grow h-full flex items-end justify-end pb-2">
+                                    <canvas id="sexChart" class="w-full" width="400" height="100"></canvas>
+                                </div>
+                                <div class="flex-none flex items-end justify-end text-xs italic">
+                                    * Available data as of&nbsp;<span id="yesterdayDate3"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card w-full h-[340px] p-4 bg-white shadow-md rounded-md flex flex-row gap-2">
+                        <div class="flex flex-col h-full w-full gap-3">
+                            <div class="text-black tracking-wide flex-none font-bold">Educational Attainment</div>
+                            <div class="flex-grow h-full flex items-end justify-end pb-2">
+                                <canvas id="educChart" class="w-full" width="400" height="50"></canvas>
+                            </div>
+                            <div class="flex-none flex items-end justify-end text-xs italic">
+                                * Available data as of&nbsp;<span id="yesterdayDate4"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
