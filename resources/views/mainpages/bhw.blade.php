@@ -25,9 +25,9 @@
             <div class="flex flex-row w-full gap-4 p-2 justify-center">
                 <select id="regionDropdown" class="select select-bordered w-full max-w-xs bg-white text-[#252525]">
                     <option disabled selected>Please select a Region</option>
-                    <option>Normal Apple</option>
-                    <option>Normal Orange</option>
-                    <option>Normal Tomato</option>
+                    @foreach($regions as $region)
+                    <option>{{ $region }}</option>
+                    @endforeach
                 </select>
 
                 <select id="cityDropdown"
@@ -48,7 +48,7 @@
                     <option>Normal Tomato</option>
                 </select>
             </div>
-
+            
             <div class="flex flex-col gap-4">
                 <div class="card w-full h-[120px] p-4 bg-white shadow-md rounded-md flex flex-col gap-4">
                     <div class="flex flex-row justify-between">
@@ -57,13 +57,14 @@
                             <div class="flex text-4xl tracking-wide	">BHW</div>
                         </div>
                         <div class="flex items-center justify-center text-[#252525] font-extrabold">
-                            <div class="flex text-7xl items-end">10 500</div>
+                            <div class="flex text-7xl items-end">129412</div>
                         </div>
                     </div>
                     <div class="flex items-end justify-end text-xs italic">
                         * Available data as of&nbsp;<span id="yesterdayDate"></span>
                     </div>
                 </div>
+                
 
 
                 <div class="flex w-full gap-4 h-[250px]">
@@ -107,6 +108,7 @@
             </div>
         </div>
     </div>
+ 
 
     <script>
         $(document).ready(function() {
