@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SidePanelController;
+use App\Http\Controllers\BHWController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +16,15 @@ use App\Http\Controllers\SidePanelController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('main');
 });
 // Route::get('/welcome', function () {
 //     return view('welcome');
 // });
-Route::get('/bhw', function () {
-    return view('mainpages/bhw');
-});
+// Route::get('/bhw', function () {
+//     return view('mainpages/bhw');
+// });
+Route::get('/bhw', [BHWController::class, 'index']);
 Route::get('/lgu', function () {
     return view('mainpages/lgu');
 });

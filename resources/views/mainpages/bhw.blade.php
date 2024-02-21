@@ -21,15 +21,14 @@
 
     <div class="flex flex-row flex-grow p-0 bg-[#E8E8E8] overflow-hidden">
         @include('side_panel')
-        <div class="flex w-full flex-col gap-4 overflow-auto">
-            <div class="p-4">
-                <div class="flex flex-row w-full gap-4 p-2 justify-center">
-                    <select id="regionDropdown" class="select select-bordered w-full max-w-xs bg-white text-[#252525]">
-                        <option disabled selected>Please select a Region</option>
-                        <option>Normal Apple</option>
-                        <option>Normal Orange</option>
-                        <option>Normal Tomato</option>
-                    </select>
+        <div class="flex p-4 w-full flex-col gap-4 overflow-auto">
+            <div class="flex flex-row w-full gap-4 p-2 justify-center">
+                <select id="regionDropdown" class="select select-bordered w-full max-w-xs bg-white text-[#252525]">
+                    <option disabled selected>Please select a Region</option>
+                    @foreach($regions as $region)
+                    <option>{{ $region }}</option>
+                    @endforeach
+                </select>
 
                     <select id="cityDropdown"
                         class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
@@ -109,6 +108,7 @@
             </div>
         </div>
     </div>
+ 
 
     <script>
         $(document).ready(function() {
