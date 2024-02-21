@@ -24,7 +24,7 @@
             <div class="flex w-full flex-col gap-4 overflow-auto h-full">
                 <div class="p-4">
                     <div class="flex flex-col w-full h-full gap-4 p-2">
-                        <div class="flex flex-row gap-4">
+                        <div class="flex flex-row gap-4 items-center justify-center">
                             <select id="regionDropdown"
                                 class="select select-bordered w-full max-w-xs bg-white text-[#252525]">
                                 <option disabled selected>Please select a Region</option>
