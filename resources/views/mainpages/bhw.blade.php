@@ -61,49 +61,49 @@
                     </div>
 
 
-                    <div class="flex w-full gap-4 h-[250px]">
-                        <div class="card w-full h-full p-4 pb-2 bg-white shadow-md rounded-md gap-2">
-                            <div class="flex flex-col h-full w-full">
-                                <div class="text-black tracking-wide flex-none font-bold">Age Group</div>
-                                <div class="flex-grow h-full flex items-end justify-end pb-2">
-                                    <canvas id="ageGroupChart" class="w-full" width="400" height="100"></canvas>
-                                </div>
-                                <div class="flex-none flex items-end justify-end text-xs italic">
-                                    * Available data as of&nbsp;<span id="yesterdayDate2"></span>
-                                </div>
+                <div class="flex w-full gap-4 h-[250px]">
+                    <div class="card w-full h-full p-4 pb-2 bg-white shadow-md rounded-md gap-2">
+                        <div class="flex flex-col h-full w-full">
+                            <div class="text-black tracking-wide flex-none font-bold">Age Group</div>
+                            <div class="flex-grow h-full flex items-end justify-end pb-2">
+                                <canvas id="ageGroupChart" class="w-full" width="400" height="100"></canvas>
                             </div>
-                        </div>
-
-
-                        <div class="card w-full h-full p-4 bg-white shadow-md rounded-md flex flex-row">
-                            <div class="flex flex-col h-full w-full">
-                                <div class="text-black tracking-wide flex-none font-bold">Sex</div>
-                                <div class="flex-grow h-full flex items-end justify-end pb-2">
-                                    <canvas id="sexChart" class="w-full" width="400" height="100"></canvas>
-                                </div>
-                                <div class="flex-none flex items-end justify-end text-xs italic">
-                                    * Available data as of&nbsp;<span id="yesterdayDate3"></span>
-                                </div>
+                            <div class="flex-none flex items-end justify-end text-xs italic">
+                                * Available data as of&nbsp;<span id="yesterdayDate2"></span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card w-full h-[340px] p-4 bg-white shadow-md rounded-md flex flex-row gap-2">
-                        <div class="flex flex-col h-full w-full gap-3">
-                            <div class="text-black tracking-wide flex-none font-bold">Educational Attainment</div>
+
+                    <div class="card w-full h-full p-4 bg-white shadow-md rounded-md flex flex-row">
+                        <div class="flex flex-col h-full w-full">
+                            <div class="text-black tracking-wide flex-none font-bold">Sex</div>
                             <div class="flex-grow h-full flex items-end justify-end pb-2">
-                                <canvas id="educChart" class="w-full" width="400" height="50"></canvas>
+                                <canvas id="sexChart" class="w-full" width="400" height="100"></canvas>
                             </div>
                             <div class="flex-none flex items-end justify-end text-xs italic">
-                                * Available data as of&nbsp;<span id="yesterdayDate4"></span>
+                                * Available data as of&nbsp;<span id="yesterdayDate3"></span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card w-full h-[340px] p-4 bg-white shadow-md rounded-md flex flex-row gap-2">
+                    <div class="flex flex-col h-full w-full gap-3">
+                        <div class="text-black tracking-wide flex-none font-bold">Educational Attainment</div>
+                        <div class="flex-grow h-full flex items-end justify-end pb-2">
+                            <canvas id="educChart" class="w-full" width="400" height="50"></canvas>
+                        </div>
+                        <div class="flex-none flex items-end justify-end text-xs italic">
+                            * Available data as of&nbsp;<span id="yesterdayDate4"></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
- 
+    </div>
+
 
     <script>
         var ageGroupPieChart;

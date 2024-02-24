@@ -31,9 +31,9 @@
         </div>
 
         <!-- Double arrow icon positioned at the bottom right -->
-        <div class="bottom-0 right-0">
+        {{-- <div class="bottom-0 right-0">
             <x-radix-double-arrow-left id="closeSidePanel" class="text-white h-[30px]" />
-        </div>
+        </div> --}}
     </div>
 </div>
 
@@ -54,9 +54,9 @@
 
             </div>
 
-            <div class="bottom-0 right-0">
+            {{-- <div class="bottom-0 right-0">
                 <x-radix-double-arrow-right id="openSidePanel" class="text-white h-[30px]" />
-            </div>
+            </div> --}}
         </div>
     </div>
     <!-- Add your content here -->
