@@ -521,16 +521,35 @@ class BHWController extends Controller
         //         'age_30_59' => 45500,
         //         'age_60_above' => 57000,
         //     ],
+        //  //add more data if needed
         // ];
     
         // Bhw::insert($bhw);
+
+
 
         $regions = Bhw::distinct('region')->pluck('region');
 
         return view('mainpages/bhw',[
             'regions' => $regions,
-            'bhw_data' => Bhw::all()
         ]);
+    }
+
+    public function getProvinces($region)
+    {
+        $provinces = Bhw::where('region', $region)->distinct('province')->pluck('province');
+        return response()->json($provinces);
+    }
+
+    public function getCities($province)
+    {
+        $cities = Bhw::where('province', $province)->distinct('city')->pluck('city');
+        return response()->json($cities);
+    }
+    public function getInfo()
+    {
+        $info = Bhw::all();
+        return response()->json($info);
     }
 }
 

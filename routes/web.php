@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SidePanelController;
 use App\Http\Controllers\BHWController;
+use App\Http\Controllers\GIDAController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,22 +19,17 @@ use App\Http\Controllers\BHWController;
 Route::get('/', function () {
     return view('main');
 });
-// Route::get('/welcome', function () {
-//     return view('welcome');
-// });
-// Route::get('/bhw', function () {
-//     return view('mainpages/bhw');
-// });
 Route::get('/bhw', [BHWController::class, 'index']);
 Route::get('/lgu', function () {
     return view('mainpages/lgu');
 });
-Route::get('/gida', function () {
-    return view('mainpages/gida');
-});
+Route::get('/gida', [GIDAController::class, 'index']);
 Route::get('/lhsml', function () {
     return view('mainpages/lhsml');
 });
 Route::get('/side-panel', [SidePanelController::class, 'show']);
+Route::get('/get-provinces-bhw/{region}', [BHWController::class, 'getProvinces']);
+Route::get('/get-cities-bhw/{province}', [BHWController::class, 'getCities']);
+Route::get('/get-info-bhw', [BHWController::class, 'getInfo']);
 
 
