@@ -63,7 +63,7 @@
 
                         <div class="flex items-center text-black gap-3">
                             Filter:
-                            <div class="dropdown relative flex items-center" style="position: relative">
+                            <div class="dropdown relative grid items-center" style="position: relative">
                                 <button class="dropdown-toggle bg-white rounded-lg " type="button" id="filterDropdown"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{-- <i class="fas fa-filter"></i> --}}
@@ -261,22 +261,39 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
+
+
+
 
         <script>
             $(document).ready(function() {
                 // Function to handle region dropdown change
                 $('#regionDropdown').change(function() {
                     var selectedRegion = $(this).val();
+
                     if (selectedRegion) {
-                        $('#cityDropdown, #barangayDropdown').prop('disabled', false);
+                        // Show loading state using Tailwind CSS spinner
+                        $('#cityDropdown, #barangayDropdown').prop('disabled', true);
+                        $('.loading-spinner').removeClass('hidden');
+
+                        // Simulate loading delay (replace this with your actual loading code)
+                        setTimeout(function() {
+                            // Once data is loaded, enable dropdowns and hide loading state
+                            $('#cityDropdown, #barangayDropdown').prop('disabled', false);
+                            $('.loading-spinner').addClass('hidden');
+                        }, 1000); // Adjust the time as needed
                     } else {
+                        // If no region is selected, disable and clear the dropdowns
                         $('#cityDropdown').prop('disabled', true).val('').change();
                         $('#barangayDropdown').prop('disabled', true).val('').change();
                     }
                 });
+
 
                 // Function to set yesterday's date
                 function setYesterdayDate() {
