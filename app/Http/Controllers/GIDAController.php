@@ -690,8 +690,28 @@ class GIDAController extends Controller
         $regions = Gida::distinct('region')->pluck('region');
             return view('mainpages/gida',[
                 'regions' => $regions,
-                'gida_data' => Gida::all()
             ]
         );
+    }
+
+    public function getProvinces($region, $year)
+    {
+        $provinces = Gida::where('region', $region)->where('year', $year)->distinct('province')->pluck('province');
+        return response()->json($provinces);
+    }
+    public function getCities($province, $year)
+    {
+        $cities = Gida::where('province', $province)->where('year', $year)->distinct('city')->pluck('city');
+        return response()->json($cities);
+    }
+    public function getBarangays($city, $year)
+    {
+        $barangays = Gida::where('city', $city)->where('year', $year)->distinct('barangay')->pluck('barangay');
+        return response()->json($barangays);
+    }
+    public function getInfo()
+    {
+        $info = Gida::all();
+        return response()->json($info);
     }
 }

@@ -126,7 +126,9 @@
                 if (selectedRegion === 'all') {
                     getInfo();
                     $('#provinceDropdown').empty();
+                    $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
                     $('#cityDropdown').empty();
+                    $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
                     $('#provinceDropdown').prop('disabled', true);
                     $('#cityDropdown').prop('disabled', true);
                     return;
@@ -134,12 +136,13 @@
                 else if (selectedRegion) {
                     $('#provinceDropdown').prop('disabled', false);
                     $('#cityDropdown').prop('disabled', true);
+                    $('#cityDropdown').empty();
+                    $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
                     $.ajax({
                     url: '/get-provinces-bhw/' + selectedRegion,
                     type: 'GET',
                     success: function(data) {
                         $('#provinceDropdown').empty();
-                        $('#cityDropdown').empty();
                         $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
                         $.ajax({
                             url: '/get-info-bhw',

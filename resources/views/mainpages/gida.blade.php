@@ -28,42 +28,34 @@
                             <select id="regionDropdown"
                                 class="select select-bordered w-full max-w-xs bg-white text-[#252525]">
                                 <option disabled selected>Please select a Region</option>
-                                <option>Normal Apple</option>
-                                <option>Normal Orange</option>
-                                <option>Normal Tomato</option>
+                                <option value="all">Show All Regions</option>
+                                @foreach($regions as $region)
+                                <option>{{ $region }}</option>
+                                @endforeach
+                            </select>
+
+                            <select id="provinceDropdown"
+                                class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
+                                disabled>
+                                <option disabled selected>Please select a Province</option>
                             </select>
 
                             <select id="cityDropdown"
                                 class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
                                 disabled>
-                                <option disabled selected>Please select a Province</option>
-                                <option>Normal Apple</option>
-                                <option>Normal Orange</option>
-                                <option>Normal Tomato</option>
-                            </select>
-
-                            <select id=""
-                                class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
-                                disabled>
                                 <option disabled selected>Please select a City</option>
-                                <option>Normal Apple</option>
-                                <option>Normal Orange</option>
-                                <option>Normal Tomato</option>
                             </select>
 
-                            <select id=""
+                            <select id="barangayDropdown"
                                 class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
                                 disabled>
                                 <option disabled selected>Please select a Barangay</option>
-                                <option>Normal Apple</option>
-                                <option>Normal Orange</option>
-                                <option>Normal Tomato</option>
                             </select>
                         </div>
 
                         <div class="flex items-center text-black gap-3">
                             Filter:
-                            <div class="dropdown relative flex items-center" style="position: relative">
+                            <div class="dropdown grid items-center">
                                 <button class="dropdown-toggle bg-white rounded-lg " type="button" id="filterDropdown"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{-- <i class="fas fa-filter"></i> --}}
@@ -115,7 +107,7 @@
                                             GIDA
                                         </div>
                                         <div class="flex items-center justify-center text-[#252525] font-bold">
-                                            <div class="flex text-4xl items-end" style="color: #0e9cdc">10 500</div>
+                                            <div class="flex text-4xl items-end" style="color: #0e9cdc" id="totalPopulation"></div>
                                         </div>
                                     </div>
                                     <div class="flex-none flex items-end justify-end text-xs italic">
@@ -130,7 +122,7 @@
                                         <div class="text-black tracking-wide flex-none font-bold">IP Population in GIDA
                                         </div>
                                         <div class="flex items-center justify-center text-[#252525] font-bold">
-                                            <div class="flex text-4xl items-end" style="color: #0e9cdc">10 500</div>
+                                            <div class="flex text-4xl items-end" style="color: #0e9cdc" id="ipPopulation"></div>
                                         </div>
                                     </div>
                                     <div class="flex-none flex items-end justify-end text-xs italic">
@@ -150,8 +142,8 @@
                                             in GIDA Barangays</div>
                                         <div class="flex items-center justify-center">
                                             <div class="flex text-xl w-full items-center justify-center font-bold"
-                                                style="color: #0e9cdc">
-                                                25</div>
+                                                style="color: #0e9cdc" id="totalHrh">
+                                                </div>
                                         </div>
                                     </div>
 
@@ -165,19 +157,13 @@
 
                                     <div class="flex items-center justify-center flex-col ">
                                         <div class="flex text-7xl h-full w-full items-center justify-center  font-bold"
-                                            style="color: #0e9cdc">
-                                            10 500</div>
+                                            style="color: #0e9cdc" id="woBhs">
+                                            </div>
                                         <div class="text-black tracking-wide flex-none font-bold">GIDA Barangays
                                             without
                                             BHS
                                         </div>
                                     </div>
-
-                                    {{-- <div class="flex flex-row w-full justify-between items-center">
-                                        <div class="text-black tracking-wide flex-none font-bold">GIDA Barangays without BHS
-                                        </div>
-                                    </div> --}}
-
                                 </div>
                             </div>
 
@@ -185,8 +171,8 @@
                                 <div class="flex flex-col h-full w-full gap-3">
                                     <div class="flex flex-col w-full justify-between items-center">
                                         <div class="flex text-7xl h-full w-full items-center justify-center text-[#252525] font-bold"
-                                            style="color: #0e9cdc">
-                                            10 500</div>
+                                            style="color: #0e9cdc" id="woElec">
+                                            </div>
                                         <div class="text-black tracking-wide flex-none font-bold">GIDA Barangays
                                             without
                                             Electricity
@@ -202,8 +188,8 @@
                                 <div class="flex flex-col h-full w-full gap-3">
                                     <div class="flex flex-col w-full justify-between items-center">
                                         <div class="flex text-7xl h-full w-full items-center justify-center text-[#252525] font-bold"
-                                            style="color: #0e9cdc">
-                                            10 500</div>
+                                            style="color: #0e9cdc" id="woSignal">
+                                            </div>
                                         <div class="text-black tracking-wide flex-none font-bold">GIDA Barangays with
                                             no
                                             Mobile
@@ -218,8 +204,8 @@
                                 <div class="flex flex-col h-full w-full gap-3">
                                     <div class="flex flex-col w-full justify-between items-center">
                                         <div class="flex text-7xl h-full w-full items-center justify-center text-[#252525] font-bold"
-                                            style="color: #0e9cdc">
-                                            10 500</div>
+                                            style="color: #0e9cdc" id="woInternet">
+                                            </div>
                                         <div class="text-black tracking-wide flex-none font-bold">GIDA Barangays with
                                             no
                                             Internet Connection
@@ -234,8 +220,8 @@
                                 <div class="flex flex-col h-full w-full gap-3">
                                     <div class="flex flex-col w-full justify-between items-center">
                                         <div class="flex text-7xl h-full w-full items-center justify-center text-[#252525] font-bold"
-                                            style="color: #0e9cdc">
-                                            10 500</div>
+                                            style="color: #0e9cdc" id="perToilet">
+                                            </div>
                                         <div class="text-black tracking-wide flex-none font-bold">Proportion of HH
                                             living
                                             in
@@ -249,8 +235,8 @@
                                 <div class="flex flex-col h-full w-full gap-3">
                                     <div class="flex flex-col w-full justify-between items-center">
                                         <div class="flex text-7xl h-full w-full items-center justify-center text-[#252525] font-bold"
-                                            style="color: #0e9cdc">
-                                            10 500</div>
+                                            style="color: #0e9cdc" id="perWater">
+                                            </div>
                                         <div
                                             class="flex text-black tracking-wide flex-none font-bold w-full justify-center">
                                             Proportion of HH
@@ -270,11 +256,146 @@
                 // Function to handle region dropdown change
                 $('#regionDropdown').change(function() {
                     var selectedRegion = $(this).val();
-                    if (selectedRegion) {
-                        $('#cityDropdown, #barangayDropdown').prop('disabled', false);
+                    var totalPopulation = 0;
+                    var ipPopulation = 0;
+                    var totalHrh = 0;
+                    var woBhs = 0;
+                    var woElec = 0;
+                    var woSignal = 0;
+                    var woInternet = 0;
+                    var perToilet = 0;
+                    var perWater = 0;
+                    if (selectedRegion === 'all'){
+                        var selectedYear = $('input[name="filter"]:checked').val();
+                        getInfo(selectedYear);
+                        $('#provinceDropdown').empty();
+                        $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
+                        $('#cityDropdown').empty();
+                        $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
+                        $('#barangayDropdown').empty();
+                        $('#barangayDropdown').append('<option disabled selected>Please select a Barangay</option>');
+                        $('#provinceDropdown').prop('disabled', true);
+                        $('#cityDropdown').prop('disabled', true);
+                        $('#barangayDropdown').prop('disabled', true);
+                        return;
+                    }
+                    else if (selectedRegion) {
+                        var selectedYear = $('input[name="filter"]:checked').val();
+                        getInfo(selectedYear, selectedRegion);
+                        $('#provinceDropdown').prop('disabled', false);
+                        $('#cityDropdown').prop('disabled', true);
+                        $('#barangayDropdown').prop('disabled', true);
+                        $('#provinceDropdown').empty();
+                        $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
+                        $('#cityDropdown').empty();
+                        $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
+                        $('#barangayDropdown').empty();
+                        $('#barangayDropdown').append('<option disabled selected>Please select a Barangay</option>');
+                        $.ajax({
+                            url: '/get-provinces-gida/' + selectedRegion + '/' + selectedYear,
+                            type: 'GET',
+                            success: function(data) {
+                                console.log("Provinces: ", data);
+                                $('#provinceDropdown').empty(); // Clear existing options
+                                $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
+                                $.each(data, function(key, value) {
+                                    console.log("This is the data from .each: ",data);
+                                    $('#provinceDropdown').append('<option>' + value + '</option>');
+                                });
+                            }
+                        });
                     } else {
+                        $('#provinceDropdown').prop('disabled', true).val('').change();
                         $('#cityDropdown').prop('disabled', true).val('').change();
                         $('#barangayDropdown').prop('disabled', true).val('').change();
+                    }
+                });
+
+                $('#provinceDropdown').change(function(){
+                    var selectedProvince = $(this).val();
+                    var totalPopulation = 0;
+                    var ipPopulation = 0;
+                    var totalHrh = 0;
+                    var woBhs = 0;
+                    var woElec = 0;
+                    var woSignal = 0;
+                    var woInternet = 0;
+                    var perToilet = 0;
+                    var perWater = 0;
+                    if(selectedProvince){
+                        var selectedYear = $('input[name="filter"]:checked').val();
+                        var selectedRegion = $('#regionDropdown').val();
+                        getInfo(selectedYear, selectedRegion, selectedProvince);
+                        $('#cityDropdown').prop('disabled', false);
+                        $('#barangayDropdown').prop('disabled', true);
+                        $('#cityDropdown').empty();
+                        $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
+                        $('#barangayDropdown').empty();
+                        $('#barangayDropdown').append('<option disabled selected>Please select a Barangay</option>');
+                        $.ajax({
+                            url: '/get-cities-gida/' + selectedProvince + '/' + selectedYear,
+                            type: 'GET',
+                            success: function(data) {
+                                $('#cityDropdown').empty(); // Clear existing options
+                                $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
+                                $.each(data, function(key, value) {
+                                    $('#cityDropdown').append('<option>' + value + '</option>');
+                                });
+                            }
+                        });
+                    }
+                });
+
+                $('#cityDropdown').change(function(){
+                    var selectedCity = $(this).val();
+                    var totalPopulation = 0;
+                    var ipPopulation = 0;
+                    var totalHrh = 0;
+                    var woBhs = 0;
+                    var woElec = 0;
+                    var woSignal = 0;
+                    var woInternet = 0;
+                    var perToilet = 0;
+                    var perWater = 0;
+                    if(selectedCity){
+                        var selectedYear = $('input[name="filter"]:checked').val();
+                        var selectedRegion = $('#regionDropdown').val();
+                        var selectedProvince = $('#provinceDropdown').val();
+                        getInfo(selectedYear, selectedRegion, selectedProvince, selectedCity);
+                        $('#barangayDropdown').prop('disabled', false);
+                        $('#barangayDropdown').empty();
+                        $('#barangayDropdown').append('<option disabled selected>Please select a Barangay</option>');
+                        $.ajax({
+                            url: '/get-barangays-gida/' + selectedCity + '/' + selectedYear,
+                            type: 'GET',
+                            success: function(data) {
+                                $('#barangayDropdown').empty();
+                                $('#barangayDropdown').append('<option disabled selected>Please select a Barangay</option>');
+                                $.each(data, function(key, value) {
+                                    $('#barangayDropdown').append('<option>' + value + '</option>');
+                                });
+                            }
+                        });
+                    }
+                });
+
+                $('#barangayDropdown').change(function(){
+                    var selectedBarangay = $(this).val();
+                    var totalPopulation = 0;
+                    var ipPopulation = 0;
+                    var totalHrh = 0;
+                    var woBhs = 0;
+                    var woElec = 0;
+                    var woSignal = 0;
+                    var woInternet = 0;
+                    var perToilet = 0;
+                    var perWater = 0;
+                    if(selectedBarangay){
+                        var selectedYear = $('input[name="filter"]:checked').val();
+                        var selectedRegion = $('#regionDropdown').val();
+                        var selectedProvince = $('#provinceDropdown').val();
+                        var selectedCity = $('#cityDropdown').val();
+                        getInfo(selectedYear, selectedRegion, selectedProvince, selectedCity, selectedBarangay);
                     }
                 });
 
@@ -284,6 +405,76 @@
                     var formattedDate = yesterday.toString("MMMM d, yyyy");
                     document.getElementById("gida_date_1").innerText = formattedDate;
                 }
+
+                function getInfo(selectedYear, selectedRegion, selectedProvince, selectedCity, selectedBarangay){
+                    var totalPopulation = 0;
+                    var ipPopulation = 0;
+                    var totalHrh = 0;
+                    var woBhs = 0;
+                    var woElec = 0;
+                    var woSignal = 0;
+                    var woInternet = 0;
+                    var perToilet = 0;
+                    var perWater = 0;
+                    var count = 0;
+                    console.log("Selected Year inside getInfo: ",selectedYear);
+
+                    // Construct the request data with the selected criteria
+                    var requestData = {
+                        year: selectedYear,
+                        region: selectedRegion,
+                        province: selectedProvince,
+                        city: selectedCity,
+                        barangay: selectedBarangay
+                    };
+                    // Remove any keys with undefined or empty values
+                    Object.keys(requestData).forEach(key => requestData[key] === undefined || requestData[key] === "" && delete requestData[key]);
+                    console.log("Request Data: ",requestData);
+
+                    $.ajax({
+                        url: '/get-info-gida',
+                        type: 'GET',
+                        data: requestData,
+                        success: function(data){
+                            // Filter the data based on requestData
+                            var filteredData = data.filter(function(item) {
+                                // Check if each key in requestData matches the corresponding key in item
+                                return Object.keys(requestData).every(function(key) {
+                                    // If requestData[key] is defined and not empty, item[key] must match it
+                                    // Otherwise, skip filtering based on this key
+                                    return requestData[key] === undefined || requestData[key] === "" || item[key] == requestData[key];
+                                });
+                            });
+                            console.log("Filtered data inside getInfo: ",filteredData);
+                            filteredData.forEach(function(item) {
+                                    totalPopulation += item.population;
+                                    ipPopulation += item.ip_population;
+                                    totalHrh += item.hrh;
+                                    woBhs += item.wo_bhs;
+                                    woElec += item.wo_electricity;
+                                    woSignal += item.wo_signal;
+                                    woInternet += item.wo_internet;
+                                    perToilet += item.proportion_sanitary;
+                                    perWater += item.proportion_water;
+                                    count++;
+                                });
+                            perToilet = (perToilet/count).toFixed(2);
+                            perWater = (perWater/count).toFixed(2);
+                            $('#totalPopulation').text(totalPopulation.toLocaleString());
+                            $('#ipPopulation').text(ipPopulation.toLocaleString());
+                            $('#totalHrh').text(totalHrh.toLocaleString());
+                            $('#woBhs').text(woBhs.toLocaleString());
+                            $('#woElec').text(woElec.toLocaleString());
+                            $('#woSignal').text(woSignal.toLocaleString());
+                            $('#woInternet').text(woInternet.toLocaleString());
+                            $('#perToilet').text(perToilet + "%");
+                            $('#perWater').text(perWater + "%");
+                        }
+                    });
+                }
+
+                var selectedYear = $('input[name="filter"]:checked').val();
+                getInfo(selectedYear);
 
                 // Call functions to render charts and set date
                 setYesterdayDate();
@@ -300,23 +491,65 @@
                 $('input[name="filter"]').change(function() {
                     // Remove checked attribute from all radio buttons except the selected one
                     $('input[name="filter"]').not(this).prop('checked', false);
-                    // Perform filtering based on selected value
-                    var selectedFilter = $(this).val();
-                    // Perform filtering logic here, for example:
-                    // Submit form or trigger AJAX request
-                    $('#filterForm').submit();
-                });
 
-                // Check URL parameter and set corresponding radio button as checked
-                var urlParams = new URLSearchParams(window.location.search);
-                var filterValue = urlParams.get('filter');
-                if (filterValue) {
-                    $('input[name="filter"]').each(function() {
-                        if ($(this).val() === filterValue) {
-                            $(this).prop('checked', true);
-                        }
-                    });
-                }
+                    // Perform filtering based on selected value
+                    var selectedYear = $('input[name="filter"]:checked').val();
+                    console.log("Year when it changed: ",selectedYear);
+                    var selectedRegion = $('#regionDropdown').val();
+                    // var selectedProvince = $('#provinceDropdown').val();
+                    // var selectedCity = $('#cityDropdown').val();
+                    // var selectedBarangay = $('#barangayDropdown').val();
+                    if(selectedRegion){
+                        $('#provinceDropdown').prop('disabled', false);
+                        $('#cityDropdown').prop('disabled', true);
+                        $('#barangayDropdown').prop('disabled', true);
+                        $('#provinceDropdown').empty();
+                        $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
+                        $('#cityDropdown').empty();
+                        $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
+                        $('#barangayDropdown').empty();
+                        $('#barangayDropdown').append('<option disabled selected>Please select a Barangay</option>');
+                        $.ajax({
+                                url: '/get-provinces-gida/' + selectedRegion + '/' + selectedYear,
+                                type: 'GET',
+                                success: function(data) {
+                                    console.log("Provinces: ", data);
+                                    $('#provinceDropdown').empty(); // Clear existing options
+                                    $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
+                                    $.each(data, function(key, value) {
+                                        console.log("This is the data from .each: ",data);
+                                        $('#provinceDropdown').append('<option>' + value + '</option>');
+                                    });
+                                }
+                            });
+                    } else {
+                        $('#provinceDropdown').prop('disabled', true).val('').change();
+                        $('#cityDropdown').prop('disabled', true).val('').change();
+                        $('#barangayDropdown').prop('disabled', true).val('').change();
+                    }
+
+                    if(!selectedRegion || selectedRegion === "all"){
+                        getInfo(selectedYear);
+                    }
+                    else{
+                        getInfo(selectedYear, selectedRegion);
+                    }
+                    // else if(!selectedCity){
+                    //     getInfo(selectedYear, selectedRegion, selectedProvince);
+                    // }
+                    // else if(!selectedBarangay){
+                    //     getInfo(selectedYear, selectedRegion, selectedProvince, selectedCity);
+                    // }
+                    // else{
+                    //     getInfo(selectedYear, selectedRegion, selectedProvince, selectedCity, selectedBarangay);
+                    // }
+        
+                     // Update URL parameter
+                    var urlParams = new URLSearchParams(window.location.search);
+                    urlParams.set('filter', selectedYear);
+                    var newUrl = window.location.pathname + '?' + urlParams.toString();
+                    window.history.pushState({}, '', newUrl);
+                });
             });
         </script>
 
