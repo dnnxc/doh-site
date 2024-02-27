@@ -255,8 +255,7 @@
                         type: 'GET',
                         success: function(data) {
                             $('#cityDropdown').empty();
-                            // $('#cityDropdown').append(
-                            //     '<option disabled selected>Please select a City</option>');
+                            $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
                             $.ajax({
                                 url: '/get-info-bhw',
                                 type: 'GET',
