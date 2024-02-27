@@ -175,6 +175,7 @@
                 var age_60_aboveCount = 0;
                 if (selectedRegion === 'all') {
                     getInfo();
+                    showCharts(); // Show charts after successful data retrieval
                     $('#provinceDropdown').empty();
                     $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
                     $('#cityDropdown').empty();
@@ -183,7 +184,7 @@
                     $('#cityDropdown').prop('disabled', true);
                     return;
                 } else if (selectedRegion) {
-
+                    $('#provinceDropdown').prop('disabled', false);
                     $('#cityDropdown').prop('disabled', true);
                     $('#cityDropdown').empty();
                     $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
@@ -216,6 +217,7 @@
                                 renderSexChart(maleCount, femaleCount);
                                 renderEducationChart(elementaryCount, high_schoolCount, collegeCount, othersCount);
                                 $('#totalPopulation').text(population.toLocaleString());
+                                showCharts(); // Show charts after successful data retrieval
                             }
                         });
                         $.each(data, function(key, value) {
@@ -279,21 +281,15 @@
                                         age_60_aboveCount += item
                                             .age_60_above;
                                     });
-                                    renderAgeGroupChart(age_18_29Count,
-                                        age_30_59Count, age_60_aboveCount);
+                                    renderAgeGroupChart(age_18_29Count, age_30_59Count, age_60_aboveCount);
                                     renderSexChart(maleCount, femaleCount);
-                                    renderEducationChart(elementaryCount,
-                                        high_schoolCount, collegeCount,
-                                        othersCount);
-                                    $('#totalPopulation').text(population
-                                        .toLocaleString());
-                                    showCharts
-                                        (); // Show charts after successful data retrieval
+                                    renderEducationChart(elementaryCount, high_schoolCount, collegeCount, othersCount);
+                                    $('#totalPopulation').text(population.toLocaleString());
+                                    showCharts(); // Show charts after successful data retrieval
                                 }
                             });
                             $.each(data, function(key, value) {
-                                $('#cityDropdown').append('<option>' + value +
-                                    '</option>');
+                                $('#cityDropdown').append('<option>' + value + '</option>');
                             });
                         }
                     });
@@ -337,14 +333,11 @@
                                 othersCount += item.others;
                                 age_18_29Count += item.age_18_29;
                                 age_30_59Count += item.age_30_59;
-                                age_60_aboveCount += item
-                                    .age_60_above;
+                                age_60_aboveCount += item.age_60_above;
                             });
-                            renderAgeGroupChart(age_18_29Count, age_30_59Count,
-                                age_60_aboveCount);
+                            renderAgeGroupChart(age_18_29Count, age_30_59Count, age_60_aboveCount);
                             renderSexChart(maleCount, femaleCount);
-                            renderEducationChart(elementaryCount, high_schoolCount,
-                                collegeCount, othersCount);
+                            renderEducationChart(elementaryCount, high_schoolCount, collegeCount, othersCount);
                             $('#totalPopulation').text(population.toLocaleString());
                             showCharts(); // Show charts after successful data retrieval
                         }
