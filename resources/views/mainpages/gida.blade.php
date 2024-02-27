@@ -55,7 +55,7 @@
 
                         <div class="flex items-center text-black gap-3">
                             Filter:
-                            <div class="dropdown grid items-center">
+                            <div class="dropdown relative grid items-center" style="position: relative">
                                 <button class="dropdown-toggle bg-white rounded-lg " type="button" id="filterDropdown"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{-- <i class="fas fa-filter"></i> --}}
@@ -247,9 +247,14 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
+
+
+
 
         <script>
             $(document).ready(function() {

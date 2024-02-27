@@ -14,6 +14,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <style>
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 4px solid #ccc;
+            border-top-color: #333;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+            /* Center the spinner horizontally */
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
 
 <body class="flex flex-col h-screen">
@@ -23,33 +41,46 @@
         @include('side_panel')
         <div class="flex p-4 w-full flex-col gap-4 overflow-auto">
             <div class="flex flex-row w-full gap-4 p-2 justify-center">
-                <select id="regionDropdown" class="select select-bordered w-full max-w-xs bg-white text-[#252525]">
+                <select id="regionDropdown" class="select select-bordered text-black w-full max-w-xs bg-white ">
                     <option disabled selected>Please select a Region</option>
                     <option value="all">Show All Regions</option>
-                    @foreach($regions as $region)
-                    <option>{{ $region }}</option>
+                    @foreach ($regions as $region)
+                        <option>{{ $region }}</option>
                     @endforeach
                 </select>
 
-                    <select id="provinceDropdown"
-                        class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
-                        disabled>
-                        <option disabled selected>Please select a Province</option>
-                    </select>
+                <select id="provinceDropdown"
+                    class="select select-bordered w-full max-w-xs bg-white text-black disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
+                    disabled>
+                    <option disabled selected>Please select a Province</option>
+                </select>
 
-                    <select id="cityDropdown"
-                        class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
-                        disabled>
-                        <option disabled selected>Please select a City</option>
-                    </select>
-                </div>
+                <select id="cityDropdown"
+                    class="select select-bordered w-full max-w-xs bg-white text-black disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
+                    disabled>
+                    <option disabled selected>Please select a City</option>
+                </select>
+            </div>
 
+            <div class="h-full w-full flex justify-center bg-white ">
+                <button type="button" id="loadingScreen"
+                    class=" items-center px-4 gap-4 flex py-2 font-semibold leading-6 text-sm shadow rounded-md text-red-500 bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed"
+                    disabled="">
+                    <div class="spinner"></div>
+                    Processing...
+                </button>
+            </div>
+
+
+
+
+            <div id="chartsContainer" class="hidden">
                 <div class="flex flex-col gap-4">
                     <div class="card w-full h-[120px] p-4 bg-white shadow-md rounded-md flex flex-col gap-4">
                         <div class="flex flex-row justify-between">
                             <div class="flex flex-col text-[#252525] font-extrabold justify-center">
-                                <div class="flex text-xl tracking-wide	">Total number of</div>
-                                <div class="flex text-4xl tracking-wide	">BHW</div>
+                                <div class="flex text-xl tracking-wide ">Total number of</div>
+                                <div class="flex text-4xl tracking-wide ">BHW</div>
                             </div>
                             <div class="flex items-center justify-center text-[#252525] font-extrabold">
                                 <div id="totalPopulation" class="flex text-7xl items-end" style="color: #0e9cdc"></div>
@@ -61,41 +92,42 @@
                     </div>
 
 
-                <div class="flex w-full gap-4 h-[250px]">
-                    <div class="card w-full h-full p-4 pb-2 bg-white shadow-md rounded-md gap-2">
-                        <div class="flex flex-col h-full w-full">
-                            <div class="text-black tracking-wide flex-none font-bold">Age Group</div>
-                            <div class="flex-grow h-full flex items-end justify-end pb-2">
-                                <canvas id="ageGroupChart" class="w-full" width="400" height="100"></canvas>
+                    <div class="flex w-full gap-4 h-[250px]">
+                        <div class="card w-full h-full p-4 pb-2 bg-white shadow-md rounded-md gap-2">
+                            <div class="flex flex-col h-full w-full">
+                                <div class="text-black tracking-wide flex-none font-bold">Age Group</div>
+                                <div class="flex-grow h-full flex items-end justify-end pb-2">
+                                    <canvas id="ageGroupChart" class="w-full" width="400" height="100"></canvas>
+                                </div>
+                                <div class="flex-none flex items-end justify-end text-xs italic">
+                                    * Available data as of&nbsp;<span id="yesterdayDate2"></span>
+                                </div>
                             </div>
-                            <div class="flex-none flex items-end justify-end text-xs italic">
-                                * Available data as of&nbsp;<span id="yesterdayDate2"></span>
+                        </div>
+
+
+                        <div class="card w-full h-full p-4 bg-white shadow-md rounded-md flex flex-row">
+                            <div class="flex flex-col h-full w-full">
+                                <div class="text-black tracking-wide flex-none font-bold">Sex</div>
+                                <div class="flex-grow h-full flex items-end justify-end pb-2">
+                                    <canvas id="sexChart" class="w-full" width="400" height="100"></canvas>
+                                </div>
+                                <div class="flex-none flex items-end justify-end text-xs italic">
+                                    * Available data as of&nbsp;<span id="yesterdayDate3"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-
-                    <div class="card w-full h-full p-4 bg-white shadow-md rounded-md flex flex-row">
-                        <div class="flex flex-col h-full w-full">
-                            <div class="text-black tracking-wide flex-none font-bold">Sex</div>
+                    <div class="card w-full h-[340px] p-4 bg-white shadow-md rounded-md flex flex-row gap-2">
+                        <div class="flex flex-col h-full w-full gap-3">
+                            <div class="text-black tracking-wide flex-none font-bold">Educational Attainment</div>
                             <div class="flex-grow h-full flex items-end justify-end pb-2">
-                                <canvas id="sexChart" class="w-full" width="400" height="100"></canvas>
+                                <canvas id="educChart" class="w-full" width="400" height="50"></canvas>
                             </div>
                             <div class="flex-none flex items-end justify-end text-xs italic">
-                                * Available data as of&nbsp;<span id="yesterdayDate3"></span>
+                                * Available data as of&nbsp;<span id="yesterdayDate4"></span>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card w-full h-[340px] p-4 bg-white shadow-md rounded-md flex flex-row gap-2">
-                    <div class="flex flex-col h-full w-full gap-3">
-                        <div class="text-black tracking-wide flex-none font-bold">Educational Attainment</div>
-                        <div class="flex-grow h-full flex items-end justify-end pb-2">
-                            <canvas id="educChart" class="w-full" width="400" height="50"></canvas>
-                        </div>
-                        <div class="flex-none flex items-end justify-end text-xs italic">
-                            * Available data as of&nbsp;<span id="yesterdayDate4"></span>
                         </div>
                     </div>
                 </div>
@@ -109,9 +141,27 @@
         var ageGroupPieChart;
         var sexPieChart;
         var educationBarChart;
+        $(document).ajaxStart(function() {
+            $('#loadingOverlay').show();
+        });
+
+        $(document).ajaxStop(function() {
+            $('#loadingOverlay').hide();
+        });
+
+
         $(document).ready(function() {
+            function showCharts() {
+                $('#loadingScreen').hide();
+                $('#chartsContainer').show();
+            }
+
             // Function to handle region dropdown change
             $('#regionDropdown').change(function() {
+                // Hide charts and show loading screen
+                $('#chartsContainer').hide();
+                $('#loadingScreen').show();
+
                 var selectedRegion = $(this).val();
                 var population = 0;
                 var maleCount = 0;
@@ -132,9 +182,8 @@
                     $('#provinceDropdown').prop('disabled', true);
                     $('#cityDropdown').prop('disabled', true);
                     return;
-                }
-                else if (selectedRegion) {
-                    $('#provinceDropdown').prop('disabled', false);
+                } else if (selectedRegion) {
+
                     $('#cityDropdown').prop('disabled', true);
                     $('#cityDropdown').empty();
                     $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
@@ -182,6 +231,10 @@
 
             // Function to handle province dropdown change
             $('#provinceDropdown').change(function() {
+                // Hide charts and show loading screen
+                $('#chartsContainer').hide();
+                $('#loadingScreen').show();
+
                 var selectedProvince = $(this).val();
                 var population = 0;
                 var maleCount = 0;
@@ -200,34 +253,47 @@
                         type: 'GET',
                         success: function(data) {
                             $('#cityDropdown').empty();
-                            $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
-                                $.ajax({
+                            // $('#cityDropdown').append(
+                            //     '<option disabled selected>Please select a City</option>');
+                            $.ajax({
                                 url: '/get-info-bhw',
                                 type: 'GET',
-                                success: function(data){
-                                    var provinceBHWInfo = data.filter(function(item) {
-                                        return item.province === selectedProvince;
+                                success: function(data) {
+                                    $('#cityDropdown').prop('disabled', false);
+                                    var provinceBHWInfo = data.filter(function(
+                                        item) {
+                                        return item.province ===
+                                            selectedProvince;
                                     });
                                     provinceBHWInfo.forEach(function(item) {
                                         population += item.population;
                                         maleCount += item.male;
                                         femaleCount += item.female;
                                         elementaryCount += item.elementary;
-                                        high_schoolCount += item.high_school;
+                                        high_schoolCount += item
+                                            .high_school;
                                         collegeCount += item.college;
                                         othersCount += item.others;
                                         age_18_29Count += item.age_18_29;
                                         age_30_59Count += item.age_30_59;
-                                        age_60_aboveCount += item.age_60_above;
+                                        age_60_aboveCount += item
+                                            .age_60_above;
                                     });
-                                    renderAgeGroupChart(age_18_29Count, age_30_59Count, age_60_aboveCount);
+                                    renderAgeGroupChart(age_18_29Count,
+                                        age_30_59Count, age_60_aboveCount);
                                     renderSexChart(maleCount, femaleCount);
-                                    renderEducationChart(elementaryCount, high_schoolCount, collegeCount, othersCount);
-                                    $('#totalPopulation').text(population.toLocaleString());
+                                    renderEducationChart(elementaryCount,
+                                        high_schoolCount, collegeCount,
+                                        othersCount);
+                                    $('#totalPopulation').text(population
+                                        .toLocaleString());
+                                    showCharts
+                                        (); // Show charts after successful data retrieval
                                 }
                             });
                             $.each(data, function(key, value) {
-                                $('#cityDropdown').append('<option>' + value + '</option>');
+                                $('#cityDropdown').append('<option>' + value +
+                                    '</option>');
                             });
                         }
                     });
@@ -236,8 +302,12 @@
                 }
             });
 
-             // Function to handle city dropdown change
-             $('#cityDropdown').change(function() {
+            // Function to handle city dropdown change
+            $('#cityDropdown').change(function() {
+                // Hide charts and show loading screen
+                $('#chartsContainer').hide();
+                $('#loadingScreen').show();
+
                 var selectedCity = $(this).val();
                 var population = 0;
                 var maleCount = 0;
@@ -253,7 +323,7 @@
                     $.ajax({
                         url: '/get-info-bhw',
                         type: 'GET',
-                        success: function(data){
+                        success: function(data) {
                             var cityBHWInfo = data.filter(function(item) {
                                 return item.city === selectedCity;
                             });
@@ -267,12 +337,16 @@
                                 othersCount += item.others;
                                 age_18_29Count += item.age_18_29;
                                 age_30_59Count += item.age_30_59;
-                                age_60_aboveCount += item.age_60_above;
+                                age_60_aboveCount += item
+                                    .age_60_above;
                             });
-                            renderAgeGroupChart(age_18_29Count, age_30_59Count, age_60_aboveCount);
+                            renderAgeGroupChart(age_18_29Count, age_30_59Count,
+                                age_60_aboveCount);
                             renderSexChart(maleCount, femaleCount);
-                            renderEducationChart(elementaryCount, high_schoolCount, collegeCount, othersCount);
+                            renderEducationChart(elementaryCount, high_schoolCount,
+                                collegeCount, othersCount);
                             $('#totalPopulation').text(population.toLocaleString());
+                            showCharts(); // Show charts after successful data retrieval
                         }
                     });
                 }
@@ -287,7 +361,9 @@
                 var ageGroupData = {
                     labels: ["18-29", "30-59", "60 and above"],
                     datasets: [{
-                        data: [age_18_29Count, age_30_59Count, age_60_aboveCount], // Sample data, replace with your actual data
+                        data: [age_18_29Count, age_30_59Count,
+                            age_60_aboveCount
+                        ], // Sample data, replace with your actual data
                         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
                     }]
                 };
@@ -349,7 +425,9 @@
                     labels: ["Elementary Level", "Highschool Level", "College Level", "Others"],
                     datasets: [{
                         label: '',
-                        data: [elementaryCount, high_schoolCount, collegeCount, othersCount], // Sample data, replace with your actual data
+                        data: [elementaryCount, high_schoolCount, collegeCount,
+                            othersCount
+                        ], // Sample data, replace with your actual data
                         backgroundColor: ["#FFCE56", "#FF6384", "#36A2EB", "#4BC0C0"]
 
                     }]
@@ -387,7 +465,8 @@
                 document.getElementById("yesterdayDate4").innerText = formattedDate;
 
             }
-            function getInfo(){
+
+            function getInfo() {
                 var population = 0;
                 var maleCount = 0;
                 var femaleCount = 0;
@@ -401,7 +480,7 @@
                 $.ajax({
                     url: '/get-info-bhw',
                     type: 'GET',
-                    success: function(data){
+                    success: function(data) {
                         data.forEach(function(item) {
                             population += item.population;
                             maleCount += item.male;
@@ -416,8 +495,10 @@
                         });
                         renderAgeGroupChart(age_18_29Count, age_30_59Count, age_60_aboveCount);
                         renderSexChart(maleCount, femaleCount);
-                        renderEducationChart(elementaryCount, high_schoolCount, collegeCount, othersCount);
+                        renderEducationChart(elementaryCount, high_schoolCount, collegeCount,
+                            othersCount);
                         $('#totalPopulation').text(population.toLocaleString());
+                        showCharts(); // Show charts after successful data retrieval
                     }
                 });
             }
