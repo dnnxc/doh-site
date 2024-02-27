@@ -175,64 +175,56 @@
                 var age_60_aboveCount = 0;
                 if (selectedRegion === 'all') {
                     getInfo();
+                    showCharts(); // Show charts after successful data retrieval
                     $('#provinceDropdown').empty();
+                    $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
                     $('#cityDropdown').empty();
+                    $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
                     $('#provinceDropdown').prop('disabled', true);
                     $('#cityDropdown').prop('disabled', true);
                     return;
                 } else if (selectedRegion) {
-
+                    $('#provinceDropdown').prop('disabled', false);
                     $('#cityDropdown').prop('disabled', true);
+                    $('#cityDropdown').empty();
+                    $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
                     $.ajax({
-                        url: '/get-provinces-bhw/' + selectedRegion,
-                        type: 'GET',
-                        success: function(data) {
-                            // $('#provinceDropdown').empty();
-                            $('#provinceDropdown').prop('disabled', false);
-                            //$('#cityDropdown').empty();
-                            $('#provinceDropdown').append(
-                                '<option disabled selected>Please select a Province</option>'
-                            );
-                            $.ajax({
-                                url: '/get-info-bhw',
-                                type: 'GET',
-                                success: function(data) {
-                                    var regionBHWInfo = data.filter(function(item) {
-                                        return item.region ===
-                                            selectedRegion;
-                                    });
-                                    regionBHWInfo.forEach(function(item) {
-                                        population += item.population;
-                                        maleCount += item.male;
-                                        femaleCount += item.female;
-                                        elementaryCount += item.elementary;
-                                        high_schoolCount += item
-                                            .high_school;
-                                        collegeCount += item.college;
-                                        othersCount += item.others;
-                                        age_18_29Count += item.age_18_29;
-                                        age_30_59Count += item.age_30_59;
-                                        age_60_aboveCount += item
-                                            .age_60_above;
-                                    });
-                                    renderAgeGroupChart(age_18_29Count,
-                                        age_30_59Count, age_60_aboveCount);
-                                    renderSexChart(maleCount, femaleCount);
-                                    renderEducationChart(elementaryCount,
-                                        high_schoolCount, collegeCount,
-                                        othersCount);
-                                    $('#totalPopulation').text(population
-                                        .toLocaleString());
-                                    showCharts
-                                        (); // Show charts after successful data retrieval
-                                }
-                            });
-                            $.each(data, function(key, value) {
-                                $('#provinceDropdown').append('<option>' + value +
-                                    '</option>');
-                            });
-                        }
-                    });
+                    url: '/get-provinces-bhw/' + selectedRegion,
+                    type: 'GET',
+                    success: function(data) {
+                        $('#provinceDropdown').empty();
+                        $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
+                        $.ajax({
+                            url: '/get-info-bhw',
+                            type: 'GET',
+                            success: function(data){
+                                var regionBHWInfo = data.filter(function(item) {
+                                    return item.region === selectedRegion;
+                                });
+                                regionBHWInfo.forEach(function(item) {
+                                    population += item.population;
+                                    maleCount += item.male;
+                                    femaleCount += item.female;
+                                    elementaryCount += item.elementary;
+                                    high_schoolCount += item.high_school;
+                                    collegeCount += item.college;
+                                    othersCount += item.others;
+                                    age_18_29Count += item.age_18_29;
+                                    age_30_59Count += item.age_30_59;
+                                    age_60_aboveCount += item.age_60_above;
+                                });
+                                renderAgeGroupChart(age_18_29Count, age_30_59Count, age_60_aboveCount);
+                                renderSexChart(maleCount, femaleCount);
+                                renderEducationChart(elementaryCount, high_schoolCount, collegeCount, othersCount);
+                                $('#totalPopulation').text(population.toLocaleString());
+                                showCharts(); // Show charts after successful data retrieval
+                            }
+                        });
+                        $.each(data, function(key, value) {
+                            $('#provinceDropdown').append('<option>' + value + '</option>');
+                        });
+                     }
+                 });
                 } else {
                     $('#provinceDropdown').prop('disabled', true).val('').change();
                     $('#cityDropdown').prop('disabled', true).val('').change();
@@ -263,8 +255,7 @@
                         type: 'GET',
                         success: function(data) {
                             $('#cityDropdown').empty();
-                            // $('#cityDropdown').append(
-                            //     '<option disabled selected>Please select a City</option>');
+                            $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
                             $.ajax({
                                 url: '/get-info-bhw',
                                 type: 'GET',
@@ -289,21 +280,15 @@
                                         age_60_aboveCount += item
                                             .age_60_above;
                                     });
-                                    renderAgeGroupChart(age_18_29Count,
-                                        age_30_59Count, age_60_aboveCount);
+                                    renderAgeGroupChart(age_18_29Count, age_30_59Count, age_60_aboveCount);
                                     renderSexChart(maleCount, femaleCount);
-                                    renderEducationChart(elementaryCount,
-                                        high_schoolCount, collegeCount,
-                                        othersCount);
-                                    $('#totalPopulation').text(population
-                                        .toLocaleString());
-                                    showCharts
-                                        (); // Show charts after successful data retrieval
+                                    renderEducationChart(elementaryCount, high_schoolCount, collegeCount, othersCount);
+                                    $('#totalPopulation').text(population.toLocaleString());
+                                    showCharts(); // Show charts after successful data retrieval
                                 }
                             });
                             $.each(data, function(key, value) {
-                                $('#cityDropdown').append('<option>' + value +
-                                    '</option>');
+                                $('#cityDropdown').append('<option>' + value + '</option>');
                             });
                         }
                     });
@@ -347,14 +332,11 @@
                                 othersCount += item.others;
                                 age_18_29Count += item.age_18_29;
                                 age_30_59Count += item.age_30_59;
-                                age_60_aboveCount += item
-                                    .age_60_above;
+                                age_60_aboveCount += item.age_60_above;
                             });
-                            renderAgeGroupChart(age_18_29Count, age_30_59Count,
-                                age_60_aboveCount);
+                            renderAgeGroupChart(age_18_29Count, age_30_59Count, age_60_aboveCount);
                             renderSexChart(maleCount, femaleCount);
-                            renderEducationChart(elementaryCount, high_schoolCount,
-                                collegeCount, othersCount);
+                            renderEducationChart(elementaryCount, high_schoolCount, collegeCount, othersCount);
                             $('#totalPopulation').text(population.toLocaleString());
                             showCharts(); // Show charts after successful data retrieval
                         }

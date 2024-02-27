@@ -19,17 +19,25 @@ use App\Http\Controllers\GIDAController;
 Route::get('/', function () {
     return view('main');
 });
+
 Route::get('/bhw', [BHWController::class, 'index']);
+Route::get('/get-provinces-bhw/{region}', [BHWController::class, 'getProvinces']);
+Route::get('/get-cities-bhw/{province}', [BHWController::class, 'getCities']);
+Route::get('/get-info-bhw', [BHWController::class, 'getInfo']);
+
 Route::get('/lgu', function () {
     return view('mainpages/lgu');
 });
+
 Route::get('/gida', [GIDAController::class, 'index']);
+Route::get('/get-provinces-gida/{region}/{year}', [GIDAController::class, 'getProvinces']);
+Route::get('/get-cities-gida/{province}/{year}', [GIDAController::class, 'getCities']);
+Route::get('/get-barangays-gida/{city}/{year}', [GIDAController::class, 'getBarangays']);
+Route::get('/get-info-gida', [GIDAController::class, 'getInfo']);
+
 Route::get('/lhsml', function () {
     return view('mainpages/lhsml');
 });
 Route::get('/side-panel', [SidePanelController::class, 'show']);
-Route::get('/get-provinces-bhw/{region}', [BHWController::class, 'getProvinces']);
-Route::get('/get-cities-bhw/{province}', [BHWController::class, 'getCities']);
-Route::get('/get-info-bhw', [BHWController::class, 'getInfo']);
 
 
