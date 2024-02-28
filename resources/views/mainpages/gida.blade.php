@@ -41,6 +41,7 @@
     <div class="flex flex-row flex-grow p-0 bg-[#E8E8E8] overflow-hidden">
         @include('side_panel')
         <div class="flex w-full flex-col gap-4 overflow-auto h-full">
+
             <div class="p-4">
                 <div class="flex flex-col w-full h-full gap-4 p-2">
                     <div class="flex flex-row gap-4 items-center justify-center">
@@ -54,19 +55,19 @@
                         </select>
 
                         <select id="provinceDropdown"
-                            class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
+                            class="select select-bordered w-full max-w-xs bg-white text-black disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
                             disabled>
                             <option disabled selected>Please select a Province</option>
                         </select>
 
                         <select id="cityDropdown"
-                            class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
+                            class="select select-bordered w-full max-w-xs bg-white text-black disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
                             disabled>
                             <option disabled selected>Please select a City</option>
                         </select>
 
                         <select id="barangayDropdown"
-                            class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
+                            class="select select-bordered w-full max-w-xs bg-white text-black disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
                             disabled>
                             <option disabled selected>Please select a Barangay</option>
                         </select>
@@ -278,7 +279,7 @@
 
                 </div>
 
-                <div class="h-full flex w-ful justify-center bg-white " id="loadingScreen">
+                <div class="h-full flex w-full justify-center bg-white " id="loadingScreen">
                     <button type="button"
                         class=" items-center px-4 gap-4 flex py-2 font-semibold leading-6 text-sm shadow rounded-md text-red-500 bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed"
                         disabled="">
