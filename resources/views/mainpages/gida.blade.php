@@ -42,7 +42,7 @@
         @include('side_panel')
         <div class="flex w-full flex-col gap-4 overflow-auto h-full">
 
-            <div class="p-4 h-full">
+            <div class="p-4">
                 <div class="flex flex-col w-full h-full gap-4 p-2">
                     <div class="flex flex-row gap-4 items-center justify-center">
                         <select id="regionDropdown"
