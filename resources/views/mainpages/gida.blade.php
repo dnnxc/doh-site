@@ -327,8 +327,8 @@
                 var selectedYear = $('input[name="filter"]:checked').val();
                 console.log("Year when it changed: ", selectedYear);
                 var selectedRegion = $('#regionDropdown').val();
-                getInfo(selectedYear, selectedRegion);
                 if (selectedRegion) {
+                    getInfo(selectedYear, selectedRegion);
                     $('#cityDropdown').prop('disabled', true);
                     $('#barangayDropdown').prop('disabled', true);
                     $('#provinceDropdown').empty();

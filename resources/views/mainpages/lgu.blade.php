@@ -349,6 +349,7 @@
                 var selectedYear = $('input[name="filter"]:checked').val();
                 var selectedRegion = $('#regionDropdown').val();
                 if(selectedRegion){
+                    getInfo(selectedYear, selectedRegion);
                     $('#provinceDropdown').prop('disabled', false);
                     $('#cityDropdown').prop('disabled', true);
                     $('#provinceDropdown').empty();
@@ -366,15 +367,14 @@
                                 });
                             }
                         });
-                    getInfo(selectedYear, selectedRegion);
                 } else if(!selectedRegion || selectedRegion === "all"){
+                    getInfo(selectedYear);
                     $('#provinceDropdown').prop('disabled', true);
                     $('#cityDropdown').prop('disabled', true);
                     $('#provinceDropdown').empty();
                     $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
                     $('#cityDropdown').empty();
                     $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
-                    getInfo(selectedYear);
                 } else {
                     $('#provinceDropdown').prop('disabled', true).val('').change();
                     $('#cityDropdown').prop('disabled', true).val('').change();
