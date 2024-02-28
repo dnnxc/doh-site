@@ -329,7 +329,7 @@
                 console.log("Year when it changed: ", selectedYear);
                 var selectedRegion = $('#regionDropdown').val();
                 if (selectedRegion) {
-                    $('#provinceDropdown').prop('disabled', false);
+                    getInfo(selectedYear, selectedRegion);
                     $('#cityDropdown').prop('disabled', true);
                     $('#barangayDropdown').prop('disabled', true);
                     $('#provinceDropdown').empty();
@@ -358,8 +358,8 @@
 
                         }
                     });
-                    getInfo(selectedYear, selectedRegion);
                 } else if (!selectedRegion || selectedRegion === "all") {
+                    getInfo(selectedYear);
                     $('#provinceDropdown').prop('disabled', true);
                     $('#cityDropdown').prop('disabled', true);
                     $('#provinceDropdown').empty();
@@ -367,7 +367,6 @@
                         '<option disabled selected>Please select a Province</option>');
                     $('#cityDropdown').empty();
                     $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
-                    getInfo(selectedYear);
                 } else {
                     $('#provinceDropdown').prop('disabled', true).val('').change();
                     $('#cityDropdown').prop('disabled', true).val('').change();
