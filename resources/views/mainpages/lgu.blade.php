@@ -243,7 +243,7 @@
                 } else if (selectedRegion) {
                     var selectedYear = $('input[name="filter"]:checked').val();
                     getInfo(selectedYear, selectedRegion);
-                    $('#provinceDropdown').prop('disabled', false);
+                    $('#provinceDropdown').prop('disabled', true);
                     $('#cityDropdown').prop('disabled', true);
                     $('#provinceDropdown').empty();
                     $('#provinceDropdown').append(
@@ -263,8 +263,7 @@
                                 $('#provinceDropdown').append('<option>' + value +
                                     '</option>');
                             });
-
-                            hideLoadingScreen();
+                            $('#provinceDropdown').prop('disabled', false);
                         }
                     });
                 } else {
@@ -290,7 +289,7 @@
                     var selectedYear = $('input[name="filter"]:checked').val();
                     var selectedRegion = $('#regionDropdown').val();
                     getInfo(selectedYear, selectedRegion, selectedProvince);
-                    $('#cityDropdown').prop('disabled', false);
+                    $('#cityDropdown').prop('disabled', true);
                     $('#cityDropdown').empty();
                     $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
                     $.ajax({
@@ -305,6 +304,7 @@
                                 $('#cityDropdown').append('<option>' + value +
                                     '</option>');
                             });
+                            $('#cityDropdown').prop('disabled', false);
 
                             hideLoadingScreen();
                         }
