@@ -25,8 +25,8 @@ return new class extends Migration
             $table->unsignedInteger('wo_electricity');
             $table->unsignedInteger('wo_signal');
             $table->unsignedInteger('wo_internet');
-            $table->unsignedInteger('proportion_sanitary');
-            $table->unsignedInteger('proportion_water');
+            $table->unsignedDecimal('proportion_sanitary',5,2);
+            $table->unsignedDecimal('proportion_water',5,2);
         });
     }
 

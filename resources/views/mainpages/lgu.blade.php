@@ -23,27 +23,22 @@
                 <div class="flex flex-row gap-4 items-center justify-center w-full">
                     <select id="regionDropdown" class="select select-bordered w-full max-w-xs bg-white text-[#252525]">
                         <option disabled selected>Please select a Region</option>
-                        <option>Normal Apple</option>
-                        <option>Normal Orange</option>
-                        <option>Normal Tomato</option>
+                        <option value="all">Show All Regions</option>
+                        @foreach($regions as $region)
+                        <option>{{ $region }}</option>
+                        @endforeach
+                    </select>
+
+                    <select id="provinceDropdown"
+                        class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
+                        disabled>
+                        <option disabled selected>Please select a Province</option>
                     </select>
 
                     <select id="cityDropdown"
                         class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
                         disabled>
-                        <option disabled selected>Please select a Province</option>
-                        <option>Normal Apple</option>
-                        <option>Normal Orange</option>
-                        <option>Normal Tomato</option>
-                    </select>
-
-                    <select id="barangayDropdown"
-                        class="select select-bordered w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none"
-                        disabled>
                         <option disabled selected>Please select a City</option>
-                        <option>Normal Apple</option>
-                        <option>Normal Orange</option>
-                        <option>Normal Tomato</option>
                     </select>
                 </div>
 
@@ -96,8 +91,8 @@
                     <div class="card w-full h-full p-4 bg-white shadow-md rounded-md flex flex-col gap-4">
                         <div class="flex flex-col w-full justify-between items-center">
                             <div class="flex text-7xl h-full w-full items-center justify-center text-[#252525] font-bold"
-                                style="color: #0e9cdc">
-                                10 500</div>
+                                style="color: #0e9cdc" id="totalCase">
+                                </div>
                             <div class="text-black tracking-wide flex-none font-bold">
                                 TB Case Notification Rate
 
@@ -109,8 +104,8 @@
 
                         <div class="flex flex-col w-full justify-between items-center">
                             <div class="flex text-7xl h-full w-full items-center justify-center text-[#252525] font-bold"
-                                style="color: #0e9cdc">
-                                10 500</div>
+                                style="color: #0e9cdc" id="totalTreatment">
+                                </div>
                             <div class="text-black tracking-wide flex-none font-bold">
                                 TB Treatment Success Rate
                             </div>
@@ -122,8 +117,8 @@
                     <div class="card w-full h-full p-4 bg-white shadow-md rounded-md flex flex-col gap-4">
                         <div class="flex flex-col w-full justify-between items-center">
                             <div class="flex text-7xl h-full w-full items-center justify-center text-[#252525] font-bold"
-                                style="color: #0e9cdc">
-                                10 500</div>
+                                style="color: #0e9cdc" id="safeWater">
+                                </div>
                             <div class="flex text-black tracking-wide font-bold w-full justify-center text-center">
                                 Percentage of households using safely managed drinking-water services/sources
                             </div>
@@ -133,8 +128,8 @@
                     <div class="card w-full h-full p-4 bg-white shadow-md rounded-md flex flex-col gap-4">
                         <div class="flex flex-col w-full justify-between items-center">
                             <div class="flex text-7xl h-full w-full items-center justify-center text-[#252525] font-bold"
-                                style="color: #0e9cdc">
-                                10 500</div>
+                                style="color: #0e9cdc" id="stunting">
+                                </div>
                             <div class="text-black tracking-wide flex-none font-bold">
                                 Prevalence of Stunting among under 5 children
                             </div>
@@ -146,8 +141,8 @@
                     <div class="card w-full h-full p-4 bg-white shadow-md rounded-md flex flex-col gap-4">
                         <div class="flex flex-col w-full justify-between items-center">
                             <div class="flex text-7xl h-full w-full items-center justify-center text-[#252525] font-bold"
-                                style="color: #0e9cdc">
-                                10 500</div>
+                                style="color: #0e9cdc" id="fullImmune">
+                                </div>
                             <div class="text-black tracking-wide flex-none font-bold">
                                 Percentage of Fully Immunized Child
                             </div>
@@ -157,8 +152,8 @@
                     <div class="card w-full h-full p-4 bg-white shadow-md rounded-md flex flex-col gap-4">
                         <div class="flex flex-col w-full justify-between items-center">
                             <div class="flex text-7xl h-full w-full items-center justify-center text-[#252525] font-bold"
-                                style="color: #0e9cdc">
-                                10 500</div>
+                                style="color: #0e9cdc" id="philpen">
+                                </div>
                             <div class="text-black tracking-wide flex-none font-bold text-center">
                                 Percentage of adults 20 years old and above who were risk assessed using the PhilPEN
                                 protocol
@@ -178,13 +173,164 @@
             // Function to handle region dropdown change
             $('#regionDropdown').change(function() {
                 var selectedRegion = $(this).val();
-                if (selectedRegion) {
-                    $('#cityDropdown, #barangayDropdown').prop('disabled', false);
+                var totalCase = 0;
+                var totalTreatment = 0;
+                var safeWater = 0;
+                var stunting = 0;
+                var fullImmune = 0;
+                var philpen = 0;
+                var count = 0;
+                if (selectedRegion === 'all'){
+                    var selectedYear = $('input[name="filter"]:checked').val();
+                    getInfo(selectedYear);
+                    $('#provinceDropdown').empty();
+                    $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
+                    $('#cityDropdown').empty();
+                    $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
+                    $('#provinceDropdown').prop('disabled', true);
+                    $('#cityDropdown').prop('disabled', true);
+                    return;
+                }
+                else if (selectedRegion) {
+                    var selectedYear = $('input[name="filter"]:checked').val();
+                    getInfo(selectedYear, selectedRegion);
+                    $('#provinceDropdown').prop('disabled', false);
+                    $('#cityDropdown').prop('disabled', true);
+                    $('#provinceDropdown').empty();
+                    $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
+                    $('#cityDropdown').empty();
+                    $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
+                    $.ajax({
+                        url: '/get-provinces-lgu/' + selectedRegion + '/' + selectedYear,
+                        type: 'GET',
+                        success: function(data) {
+                            $('#provinceDropdown').empty(); // Clear existing options
+                            $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
+                            $.each(data, function(key, value) {
+                                console.log("This is the data from .each: ",data);
+                                $('#provinceDropdown').append('<option>' + value + '</option>');
+                            });
+                        }
+                    });
                 } else {
+                    $('#provinceDropdown').prop('disabled', true).val('').change();
                     $('#cityDropdown').prop('disabled', true).val('').change();
-                    $('#barangayDropdown').prop('disabled', true).val('').change();
                 }
             });
+
+            // Function to handle region dropdown change
+            $('#provinceDropdown').change(function() {
+                var selectedProvince = $(this).val();
+                var totalCase = 0;
+                var totalTreatment = 0;
+                var safeWater = 0;
+                var stunting = 0;
+                var fullImmune = 0;
+                var philpen = 0;
+                var count = 0;
+                if (selectedProvince) {
+                    var selectedYear = $('input[name="filter"]:checked').val();
+                    var selectedRegion = $('#regionDropdown').val();
+                    getInfo(selectedYear, selectedRegion, selectedProvince);
+                    $('#cityDropdown').prop('disabled', false);
+                    $('#cityDropdown').empty();
+                    $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
+                    $.ajax({
+                        url: '/get-cities-lgu/' + selectedProvince + '/' + selectedYear,
+                        type: 'GET',
+                        success: function(data) {
+                            $('#cityDropdown').empty();
+                            $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
+                            $.each(data, function(key, value) {
+                                console.log("This is the data from .each: ",data);
+                                $('#cityDropdown').append('<option>' + value + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#cityDropdown').prop('disabled', true).val('').change();
+                }
+            });
+
+            // Function to handle region dropdown change
+            $('#cityDropdown').change(function() {
+                var selectedCity = $(this).val();
+                var totalCase = 0;
+                var totalTreatment = 0;
+                var safeWater = 0;
+                var stunting = 0;
+                var fullImmune = 0;
+                var philpen = 0;
+                var count = 0;
+                if (selectedCity) {
+                    var selectedYear = $('input[name="filter"]:checked').val();
+                    var selectedRegion = $('#regionDropdown').val();
+                    var selectedProvince = $('#provinceDropdown').val();
+                    getInfo(selectedYear, selectedRegion, selectedProvince, selectedCity);
+                }
+            });
+
+
+            function getInfo(selectedYear, selectedRegion, selectedProvince, selectedCity){
+                var totalCase = 0;
+                var totalTreatment = 0;
+                var safeWater = 0;
+                var stunting = 0;
+                var fullImmune = 0;
+                var philpen = 0;
+                var count = 0;
+
+                // Construct the request data with the selected criteria
+                var requestData = {
+                    year: selectedYear,
+                    region: selectedRegion,
+                    province: selectedProvince,
+                    city: selectedCity,
+                };
+                // Remove any keys with undefined or empty values
+                Object.keys(requestData).forEach(key => requestData[key] === undefined || requestData[key] === "" && delete requestData[key]);
+
+                $.ajax({
+                    url: '/get-info-lgu',
+                    type: 'GET',
+                    data: requestData,
+                    success: function(data){
+                        // Filter the data based on requestData
+                        var filteredData = data.filter(function(item) {
+                            // Check if each key in requestData matches the corresponding key in item
+                            return Object.keys(requestData).every(function(key) {
+                                // If requestData[key] is defined and not empty, item[key] must match it
+                                // Otherwise, skip filtering based on this key
+                                return requestData[key] === undefined || requestData[key] === "" || item[key] == requestData[key];
+                            });
+                        });
+                        filteredData.forEach(function(item) {
+                                totalCase += item.tb_case;
+                                totalTreatment += item.tb_treatment;
+                                safeWater += parseFloat(item.safe_water);
+                                stunting += parseFloat(item.stunting);
+                                fullImmune += parseFloat(item.full_immune);
+                                philpen += parseFloat(item.risk_philpen);
+                                count++;
+                            });
+                        totalCase = Math.round(totalCase / count).toLocaleString();
+                        totalTreatment = Math.round(totalTreatment / count).toLocaleString();
+                        safeWater = (safeWater / count).toFixed(2) + "%";
+                        stunting = (stunting / count).toFixed(2) + "%";
+                        fullImmune = (fullImmune / count).toFixed(2) + "%";
+                        philpen = (philpen / count).toFixed(2) + "%";
+                        $('#totalCase').text(totalCase);
+                        $('#totalTreatment').text(totalTreatment);
+                        $('#safeWater').text(safeWater);
+                        $('#stunting').text(stunting);
+                        $('#fullImmune').text(fullImmune);
+                        $('#philpen').text(philpen);
+                    }
+                });
+            }
+
+            var selectedYear = $('input[name="filter"]:checked').val();
+            getInfo(selectedYear);
 
             // Hide dropdown menu initially
             $('.dropdown-menu').hide();
@@ -198,23 +344,49 @@
             $('input[name="filter"]').change(function() {
                 // Remove checked attribute from all radio buttons except the selected one
                 $('input[name="filter"]').not(this).prop('checked', false);
-                // Perform filtering based on selected value
-                var selectedFilter = $(this).val();
-                // Perform filtering logic here, for example:
-                // Submit form or trigger AJAX request
-                $('#filterForm').submit();
-            });
 
-            // Check URL parameter and set corresponding radio button as checked
-            var urlParams = new URLSearchParams(window.location.search);
-            var filterValue = urlParams.get('filter');
-            if (filterValue) {
-                $('input[name="filter"]').each(function() {
-                    if ($(this).val() === filterValue) {
-                        $(this).prop('checked', true);
-                    }
-                });
-            }
+                // Perform filtering based on selected value
+                var selectedYear = $('input[name="filter"]:checked').val();
+                var selectedRegion = $('#regionDropdown').val();
+                if(selectedRegion){
+                    $('#provinceDropdown').prop('disabled', false);
+                    $('#cityDropdown').prop('disabled', true);
+                    $('#provinceDropdown').empty();
+                    $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
+                    $('#cityDropdown').empty();
+                    $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
+                    $.ajax({
+                            url: '/get-provinces-lgu/' + selectedRegion + '/' + selectedYear,
+                            type: 'GET',
+                            success: function(data) {
+                                $('#provinceDropdown').empty(); // Clear existing options
+                                $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
+                                $.each(data, function(key, value) {
+                                    $('#provinceDropdown').append('<option>' + value + '</option>');
+                                });
+                            }
+                        });
+                    getInfo(selectedYear, selectedRegion);
+                } else if(!selectedRegion || selectedRegion === "all"){
+                    $('#provinceDropdown').prop('disabled', true);
+                    $('#cityDropdown').prop('disabled', true);
+                    $('#provinceDropdown').empty();
+                    $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');
+                    $('#cityDropdown').empty();
+                    $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
+                    getInfo(selectedYear);
+                } else {
+                    $('#provinceDropdown').prop('disabled', true).val('').change();
+                    $('#cityDropdown').prop('disabled', true).val('').change();
+                    $('#barangayDropdown').prop('disabled', true).val('').change();
+                }
+    
+                    // Update URL parameter
+                var urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('filter', selectedYear);
+                var newUrl = window.location.pathname + '?' + urlParams.toString();
+                window.history.pushState({}, '', newUrl);
+            });
         });
     </script>
 </body>
