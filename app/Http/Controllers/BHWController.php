@@ -526,8 +526,6 @@ class BHWController extends Controller
     
         // Bhw::insert($bhw);
 
-
-
         $regions = Bhw::distinct('region')->pluck('region');
 
         return view('mainpages/bhw',[
