@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @vite('resources/css/app.css')
 
-    <title>Department of Health - BHW</title>
+    <title>Department of Health - LHSML</title>
     <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet"> -->
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
