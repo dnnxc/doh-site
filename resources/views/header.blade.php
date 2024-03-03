@@ -6,11 +6,14 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
         </div> -->
-        
+
         <div class="flex items-center gap-4 justify-center flex-grow">
             <img src="{{ asset('images/DOHlogo.png') }}" alt="Department of Health" class="h-[60px]">
-            <h1 class="text-xl font-bold text-[#ffff]">Department of Health</h1>
-            <img src="{{ asset('images/ph.png') }}" alt="Republic of the Philippines" class="h-[60px]">
+            <div class="flex flex-col ">
+                <h1 class="text-sm font-bold text-[#ffff]">Department of Health</h1>
+                <h1 class="text-xl font-bold text-[#ffff]">Local Health Systems Dashboard</h1>
+            </div>
+            {{-- <img src="{{ asset('images/ph.png') }}" alt="Republic of the Philippines" class="h-[60px]"> --}}
         </div>
     </div>
 </div>
