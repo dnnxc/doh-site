@@ -41,7 +41,7 @@
         <div class="flex h-full w-full p-4">
             <div class="flex flex-col p-2 gap-4 items-center w-full h-full">
                 <div class="flex flex-row gap-4 items-center justify-center w-full">
-                    <select id="regionDropdown" class="select select-bordered w-full max-w-xs bg-white text-[#252525]">
+                    <select id="regionDropdown" class="select select-bordered w-full max-w-xs bg-white  text-black disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none">
                         <option disabled selected>Please select a Region</option>
                         <option value="all">Show All Regions</option>
                         @foreach ($regions as $region)
@@ -204,13 +204,16 @@
         function showLoadingScreen() {
             $('#loadingScreen').show();
             $('#lguBody').hide();
-
+            $('#regionDropdown').prop('disabled', true);
+            $('#provinceDropdown').prop('disabled', true);
+            $('#cityDropdown').prop('disabled', true);
         }
 
         // Function to hide loading screen and show content
         function hideLoadingScreen() {
             $('#loadingScreen').hide();
             $('#lguBody').show();
+            $('#regionDropdown').prop('disabled', false);     
         }
 
         $(document).ready(function() {
@@ -218,9 +221,7 @@
 
             // Function to handle region dropdown change
             $('#regionDropdown').change(function() {
-                $('#lguBody').hide();
-                $('#loadingScreen').show();
-
+                showLoadingScreen();
                 var selectedRegion = $(this).val();
                 var totalCase = 0;
                 var totalTreatment = 0;
@@ -274,8 +275,7 @@
 
             // Function to handle region dropdown change
             $('#provinceDropdown').change(function() {
-                $('#lguBody').hide();
-                $('#loadingScreen').show();
+                showLoadingScreen();
 
                 var selectedProvince = $(this).val();
                 var totalCase = 0;
@@ -304,9 +304,8 @@
                                 $('#cityDropdown').append('<option>' + value +
                                     '</option>');
                             });
+                            $('#provinceDropdown').prop('disabled', false);
                             $('#cityDropdown').prop('disabled', false);
-
-                            hideLoadingScreen();
                         }
                     });
                 } else {
@@ -316,8 +315,6 @@
 
             // Function to handle region dropdown change
             $('#cityDropdown').change(function() {
-
-
                 var selectedCity = $(this).val();
                 var totalCase = 0;
                 var totalTreatment = 0;
@@ -336,8 +333,7 @@
 
 
             function getInfo(selectedYear, selectedRegion, selectedProvince, selectedCity) {
-                $('#lguBody').hide();
-                $('#loadingScreen').show();
+                showLoadingScreen();
 
                 var totalCase = 0;
                 var totalTreatment = 0;
@@ -395,6 +391,11 @@
                         $('#fullImmune').text(fullImmune);
                         $('#philpen').text(philpen);
 
+                        if(requestData.city){
+                            $('#provinceDropdown').prop('disabled', false);
+                            $('#cityDropdown').prop('disabled', false);
+                        }
+
                         hideLoadingScreen();
                     }
                 });
@@ -421,7 +422,7 @@
                 var selectedRegion = $('#regionDropdown').val();
                 if(selectedRegion){
                     getInfo(selectedYear, selectedRegion);
-                    $('#provinceDropdown').prop('disabled', false);
+                    $('#provinceDropdown').prop('disabled', true);
                     $('#cityDropdown').prop('disabled', true);
                     $('#provinceDropdown').empty();
                     $('#provinceDropdown').append(
@@ -437,6 +438,7 @@
                                 $.each(data, function(key, value) {
                                     $('#provinceDropdown').append('<option>' + value + '</option>');
                                 });
+                                $('#provinceDropdown').prop('disabled', false);
                             }
                         });
                 } else if(!selectedRegion || selectedRegion === "all"){

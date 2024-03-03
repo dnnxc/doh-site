@@ -46,7 +46,7 @@
                 <div class="flex flex-col w-full h-full gap-4 p-2">
                     <div class="flex flex-row gap-4 items-center justify-center">
                         <select id="regionDropdown"
-                            class="select select-bordered w-full max-w-xs bg-white text-[#252525]">
+                            class="select select-bordered w-full max-w-xs bg-white  text-black disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none">
                             <option disabled selected>Please select a Region</option>
                             <option value="all">Show All Regions</option>
                             @foreach ($regions as $region)
@@ -300,13 +300,17 @@
         function showLoadingScreen() {
             $('#loadingScreen').show();
             $('#gidaBody').hide();
-
+            $('#regionDropdown').prop('disabled', true);
+            $('#provinceDropdown').prop('disabled', true);
+            $('#cityDropdown').prop('disabled', true);
+            $('#barangayDropdown').prop('disabled', true);
         }
 
         // Function to hide loading screen and show content
         function hideLoadingScreen() {
             $('#loadingScreen').hide();
             $('#gidaBody').show();
+            $('#regionDropdown').prop('disabled', false);
         }
 
         $(document).ready(function() {
@@ -321,8 +325,7 @@
                 // Remove checked attribute from all radio buttons except the selected one
                 $('input[name="filter"]').not(this).prop('checked', false);
 
-                $('#gidaBody').hide();
-                $('#loadingScreen').show();
+                showLoadingScreen();
 
                 // Perform filtering based on selected value
                 var selectedYear = $('input[name="filter"]:checked').val();
@@ -383,12 +386,11 @@
             });
 
 
-            $('#loadingScreen').hide();
+            hideLoadingScreen();
 
             // Function to handle region dropdown change
             $('#regionDropdown').change(function() {
-                $('#gidaBody').hide();
-                $('#loadingScreen').show();
+                showLoadingScreen();
 
                 var selectedRegion = $(this).val();
                 var totalPopulation = 0;
@@ -445,7 +447,6 @@
                                     '</option>');
                             });
                             $('#provinceDropdown').prop('disabled', false);
-                            hideLoadingScreen();
                         }
                     });
                 } else {
@@ -456,8 +457,7 @@
             });
 
             $('#provinceDropdown').change(function() {
-                $('#gidaBody').hide();
-                $('#loadingScreen').show();
+                showLoadingScreen();
 
                 var selectedProvince = $(this).val();
                 var totalPopulation = 0;
@@ -491,8 +491,8 @@
                                 $('#cityDropdown').append('<option>' + value +
                                     '</option>');
                             });
+                            $('#provinceDropdown').prop('disabled', false);
                             $('#cityDropdown').prop('disabled', false);
-                            hideLoadingScreen();
                         }
                     });
                 } else {
@@ -536,8 +536,9 @@
                                 $('#barangayDropdown').append('<option>' + value +
                                     '</option>');
                             });
+                            $('#provinceDropdown').prop('disabled', false);
+                            $('#cityDropdown').prop('disabled', false);
                             $('#barangayDropdown').prop('disabled', false);
-                            hideLoadingScreen();
                         }
                     });
                 } else {
@@ -546,8 +547,7 @@
             });
 
             $('#barangayDropdown').change(function() {
-                $('#gidaBody').hide();
-                $('#loadingScreen').show();
+                showLoadingScreen();
 
                 var selectedBarangay = $(this).val();
                 var totalPopulation = 0;
@@ -576,8 +576,7 @@
             }
 
             function getInfo(selectedYear, selectedRegion, selectedProvince, selectedCity, selectedBarangay) {
-                $('#gidaBody').hide();
-                $('#loadingScreen').show();
+                showLoadingScreen();
 
                 var totalPopulation = 0;
                 var ipPopulation = 0;
@@ -645,6 +644,11 @@
                         $('#perToilet').text(perToilet + "%");
                         $('#perWater').text(perWater + "%");
 
+                        if(requestData.barangay){
+                            $('#provinceDropdown').prop('disabled', false);
+                            $('#cityDropdown').prop('disabled', false);
+                            $('#barangayDropdown').prop('disabled', false);
+                        }
                         hideLoadingScreen();
                     }
                 });

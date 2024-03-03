@@ -41,7 +41,7 @@
         @include('side_panel')
         <div class="flex p-4 w-full flex-col gap-4 overflow-auto">
             <div class="flex flex-row w-full gap-4 p-2 justify-center">
-                <select id="regionDropdown" class="select select-bordered text-black w-full max-w-xs bg-white ">
+                <select id="regionDropdown" class="select select-bordered text-black w-full max-w-xs bg-white disabled:bg-white disabled:text-[#2c2c2c] disabled:border-none">
                     <option disabled selected>Please select a Region</option>
                     <option value="all">Show All Regions</option>
                     @foreach ($regions as $region)
@@ -152,16 +152,25 @@
 
         $(document).ready(function() {
             
-            function showCharts() {
+            function hideLoadingScreen() {
                 $('#loadingScreen').hide();
                 $('#chartsContainer').show();
+                $('#regionDropdown').prop('disabled', false);
             }
+
+                function showLoadingScreen() {
+                $('#loadingScreen').show();
+                $('#chartsContainer').hide();
+                $('#regionDropdown').prop('disabled', true);
+                $('#provinceDropdown').prop('disabled', true);
+                $('#cityDropdown').prop('disabled', true);
+            }
+
 
             // Function to handle region dropdown change
             $('#regionDropdown').change(function() {
                 // Hide charts and show loading screen
-                $('#chartsContainer').hide();
-                $('#loadingScreen').show();
+                showLoadingScreen();
 
                 var selectedRegion = $(this).val();
                 var population = 0;
@@ -176,7 +185,7 @@
                 var age_60_aboveCount = 0;
                 if (selectedRegion === 'all') {
                     getInfo();
-                    showCharts(); // Show charts after successful data retrieval
+                    hideLoadingScreen(); // Show charts after successful data retrieval
                     $('#provinceDropdown').empty();
                     $('#provinceDropdown').append(
                         '<option disabled selected>Please select a Province</option>');
@@ -186,8 +195,10 @@
                     $('#cityDropdown').prop('disabled', true);
                     return;
                 } else if (selectedRegion) {
-                    $('#provinceDropdown').prop('disabled', false);
+                    $('#provinceDropdown').prop('disabled', true);
                     $('#cityDropdown').prop('disabled', true);
+                    $('#provinceDropdown').empty();
+                    $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');  
                     $('#cityDropdown').empty();
                     $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
                     $.ajax({
@@ -226,10 +237,9 @@
                                     renderEducationChart(elementaryCount,
                                         high_schoolCount, collegeCount,
                                         othersCount);
-                                    $('#totalPopulation').text(population
-                                        .toLocaleString());
-                                    showCharts
-                                (); // Show charts after successful data retrieval
+                                    $('#totalPopulation').text(population.toLocaleString());
+                                    hideLoadingScreen(); // Show charts after successful data retrieval
+                                    $('#provinceDropdown').prop('disabled', false);
                                 }
                             });
                             $.each(data, function(key, value) {
@@ -247,8 +257,7 @@
             // Function to handle province dropdown change
             $('#provinceDropdown').change(function() {
                 // Hide charts and show loading screen
-                $('#chartsContainer').hide();
-                $('#loadingScreen').show();
+                showLoadingScreen();
 
                 var selectedProvince = $(this).val();
                 var population = 0;
@@ -262,7 +271,10 @@
                 var age_30_59Count = 0;
                 var age_60_aboveCount = 0;
                 if (selectedProvince) {
-                    $('#cityDropdown').prop('disabled', false);
+                    $('#cityDropdown').prop('disabled', true);
+                    $('#cityDropdown').empty();
+                    $('#cityDropdown').append(
+                        '<option disabled selected>Please select a City</option>');
                     $.ajax({
                         url: '/get-cities-bhw/' + selectedProvince,
                         type: 'GET',
@@ -274,7 +286,6 @@
                                 url: '/get-info-bhw',
                                 type: 'GET',
                                 success: function(data) {
-                                    $('#cityDropdown').prop('disabled', false);
                                     var provinceBHWInfo = data.filter(function(
                                         item) {
                                         return item.province ===
@@ -300,10 +311,10 @@
                                     renderEducationChart(elementaryCount,
                                         high_schoolCount, collegeCount,
                                         othersCount);
-                                    $('#totalPopulation').text(population
-                                        .toLocaleString());
-                                    showCharts
-                                (); // Show charts after successful data retrieval
+                                    $('#totalPopulation').text(population.toLocaleString());
+                                    hideLoadingScreen(); // Show charts after successful data retrieval
+                                    $('#provinceDropdown').prop('disabled', false);
+                                    $('#cityDropdown').prop('disabled', false);
                                 }
                             });
                             $.each(data, function(key, value) {
@@ -320,9 +331,7 @@
             // Function to handle city dropdown change
             $('#cityDropdown').change(function() {
                 // Hide charts and show loading screen
-                $('#chartsContainer').hide();
-                $('#loadingScreen').show();
-
+                showLoadingScreen();
                 var selectedCity = $(this).val();
                 var population = 0;
                 var maleCount = 0;
@@ -360,7 +369,9 @@
                             renderEducationChart(elementaryCount, high_schoolCount,
                                 collegeCount, othersCount);
                             $('#totalPopulation').text(population.toLocaleString());
-                            showCharts(); // Show charts after successful data retrieval
+                            hideLoadingScreen(); // Show charts after successful data retrieval
+                            $('#provinceDropdown').prop('disabled', false);
+                            $('#cityDropdown').prop('disabled', false);
                         }
                     });
                 }
@@ -512,7 +523,7 @@
                         renderEducationChart(elementaryCount, high_schoolCount, collegeCount,
                             othersCount);
                         $('#totalPopulation').text(population.toLocaleString());
-                        showCharts(); // Show charts after successful data retrieval
+                        hideLoadingScreen(); // Show charts after successful data retrieval
                     }
                 });
             }
