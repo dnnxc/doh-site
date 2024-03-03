@@ -196,7 +196,9 @@
                     return;
                 } else if (selectedRegion) {
                     $('#provinceDropdown').prop('disabled', true);
-                    $('#cityDropdown').prop('disabled', true);  
+                    $('#cityDropdown').prop('disabled', true);
+                    $('#provinceDropdown').empty();
+                    $('#provinceDropdown').append('<option disabled selected>Please select a Province</option>');  
                     $('#cityDropdown').empty();
                     $('#cityDropdown').append('<option disabled selected>Please select a City</option>');
                     $.ajax({
@@ -270,6 +272,9 @@
                 var age_60_aboveCount = 0;
                 if (selectedProvince) {
                     $('#cityDropdown').prop('disabled', true);
+                    $('#cityDropdown').empty();
+                    $('#cityDropdown').append(
+                        '<option disabled selected>Please select a City</option>');
                     $.ajax({
                         url: '/get-cities-bhw/' + selectedProvince,
                         type: 'GET',
